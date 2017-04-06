@@ -1,4 +1,4 @@
-#include "AI.h"
+#include "Ai.h"
 
 Ai::Ai(std::string difficulty) {
 };
@@ -21,19 +21,30 @@ void Ai::arrangeShip() {
 	destroyer.yStart = 1;
 };
 
-int* Ai::decideAttack(int board[10][10]) {
+int* Ai::easyAttack(int board[10][10]) {
 
 	int attack[2];
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 10; j < 10; j++)
-			if (!board[i][j]) {
+			if (!board[i + rand() % 10][j + rand() % 10]) {
 				attack[0] = i;
 				attack[1] = j;
 				return attack;
 			}
 	}
+	return nullptr;
 };
+
+int* Ai::normalAttack(int board[10][10]) {
+	
+	if (noTarget) {
+		return easyAttack(board);
+	}
+	else {
+
+	}
+}
 
 int Ai::getX() {
 };
