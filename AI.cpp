@@ -1,11 +1,11 @@
 #include "AI.h"
 
-AI::AI(std::string difficulty = "easy") {
+Ai::Ai(std::string difficulty) {
 };
 
-void AI::arrangeShip() {
+void Ai::arrangeShip() {
 };
-void AI::decideAttack(int[] board) {
+void Ai::decideAttack(int[] board) {
 };
-int AI::getX() {
+int Ai::getX() {
 };

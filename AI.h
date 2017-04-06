@@ -1,20 +1,20 @@
-//#ifndef AI
-//#define AI
+#ifndef AI
+#define AI
 
 #include <string>
 
-class AI {
+class Ai {
 private:
 	std::string difficulty;
 	int nextX;
 	int nextY;
 
 public:
-	AI(std::string difficulty);
+	Ai(std::string difficulty = "easy");
 
 	void arrangeShip();
 	void decideAttack(int[] board);
 	int getX();
 };
 
-//#endif
+#endif
