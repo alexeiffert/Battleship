@@ -1,4 +1,4 @@
-#include "AI.h"
+#include "Ai.h"
 
 Ai::Ai(std::string difficulty) {
 };
