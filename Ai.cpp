@@ -37,13 +37,30 @@ int* Ai::easyAttack(int board[10][10]) {
 };
 
 int* Ai::normalAttack(int board[10][10]) {
-	
-	if (noTarget) {
+
+	int attack[2];
+
+	if (!target) {
 		return easyAttack(board);
 	}
-	else {
-
+	else if (target) {
+		for (int i = -1; i = 1; i += 2) {
+			for (int j = -1; i = 1; i += 2) {
+				if (board[i + target[0]][j + target[1]]) {
+					continue;
+				}
+				else {
+					attack[0] = i;
+					attack[1] = j;
+					return attack;
+				}
+			}
+		}
 	}
+}
+
+int* Ai::hardAttack(int board[10][10]) {
+	//TODO
 }
 
 int Ai::getX() {

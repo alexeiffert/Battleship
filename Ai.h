@@ -7,7 +7,7 @@
 class Ai {
 private:
 	std::string difficulty;
-	bool noTarget;
+	int target[2];
 
 	Ship carrier;
 	Ship battleship;
