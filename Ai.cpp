@@ -1,7 +1,13 @@
 #include "Ai.h"
 
+
 Ai::Ai(std::string difficulty) {
+	this->difficulty = difficulty;
 };
+
+Ship Ai::printShip() {
+	return carrier;
+}
 
 //Arranges ships at the start of the game only
 void Ai::arrangeShip() {
@@ -52,16 +58,19 @@ int* Ai::normalAttack(int board[10][10]) {
 				else {
 					attack[0] = i;
 					attack[1] = j;
-					return attack;
 				}
 			}
 		}
 	}
+	return attack;
 }
 
 int* Ai::hardAttack(int board[10][10]) {
 	//TODO
+	int x[1];
+	return x;
 }
 
 int Ai::getX() {
+	return 1;
 };

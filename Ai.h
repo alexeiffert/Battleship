@@ -2,7 +2,15 @@
 #define AI
 
 #include <string>
+#include <iostream>
 #include <stdlib.h> 
+
+class Ship {
+public:
+	int size;
+	int xStart;
+	int yStart;
+};
 
 class Ai {
 private:
@@ -19,10 +27,11 @@ private:
 
 	int board [10][10];
 public:
-
+	
 	//Constructs an Ai object with default difficulty "easy"
 	Ai(std::string difficulty = "easy");
 
+	Ship printShip();
 	//Arranges ships at the start of the game only
 	void arrangeShip();
 
@@ -30,7 +39,7 @@ public:
 	int* easyAttack(int board[10][10]);
 	int* normalAttack(int board[10][10]);
 	int* hardAttack(int board[10][10]);
-	int* insaneAttack(int board[10][10]);
+//	int* insaneAttack(int board[10][10]);
 
 	int getX();
 };
