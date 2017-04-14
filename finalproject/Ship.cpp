@@ -13,24 +13,31 @@ private:
 
 public:
     int getyStart() {
-        return 0;
+        return yStart;
     }
     int getxStart() {
-        return 0;
+        return xStart;
     }
     int getDirection() {
-        return 0;
+        return direction;
     }
     void destroyedShip() {
-
+            if (isDestroyed==true) {
+                yStart = 0;
+                xStart = 0;
+                direction = 0;
+            }
+            else {
+                break;
+            }
     }
     bool getStatus() {
-        if () {
-
+        if (isDestroyed==false) {
+            return false;
         }
 
         else {
-
+            return true;
         }
     }
 }
