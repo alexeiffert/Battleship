@@ -21,12 +21,14 @@ int main() {
 	srand(time(NULL));
 	int randomx = rand();
 	int randomy = rand();
+	c = 0;
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-//			std::cout << board[(i + randomx) % 10][(j + randomy) % 10] << " ";
-			std::cout << board[(i + randomx) % 10][(j + randomy) % 10];
+			c++;
 			if (!board[(i + randomx) % 10][(j + randomy) % 10]) {
+				
+				std::cout << c << " ";
 				std::cout << board[(i + randomx) % 10][(j + randomy) % 10] << std::endl;
 			}
 		}
