@@ -2,16 +2,16 @@
 
 using namespace std;
 
-class Ship() {
-private:
-    virtual int length;
-    virtual string name;
+class Ship {
+
+public:
+    int length;
+    string name;
     int yStart;
     int xStart;
     int direction;
     bool isDestroyed;
 
-public:
     int getyStart() {
         return yStart;
     }
@@ -28,7 +28,7 @@ public:
                 direction = 0;
             }
             else {
-                break;
+                ;
             }
     }
     bool getStatus() {
@@ -40,26 +40,25 @@ public:
             return true;
         }
     }
-}
+};
 class Battleship:Ship {
-    length = 4;
-    name = "Battleship";
+    int length = 4;
+    string name = "Battleship";
 };
 class Carrier:Ship {
-    length = 5;
-    name = "Carrier";
+    int length = 5;
+    string name = "Carrier";
 };
 class Cruiser:Ship {
-    length = 3;
-    name = "Cruiser";
+    int length = 3;
+    string name = "Cruiser";
 };
 class Submarine:Ship {
-    length = 3;
-    name = "Submarine";
+    int length = 3;
+    string name = "Submarine";
 };
 class Destroyer:Ship {
-    length = 2;
-    name = "Destroyer";
+    int length = 2;
+    string name = "Destroyer";
 };
 
-};
