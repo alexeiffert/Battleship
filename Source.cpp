@@ -6,7 +6,9 @@ int main() {
 
 	int board[10][10];
 
-	int c = 0;
+	int c;
+
+	std::cout << c << std::endl;
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -25,7 +27,6 @@ int main() {
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			c++;
 			if (!board[(i + randomx) % 10][(j + randomy) % 10]) {
 				
 				std::cout << c << " ";

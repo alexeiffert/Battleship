@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h> 
+#include "Stack.h"
 
 class Ship {
 public:
@@ -16,6 +17,7 @@ class Ai {
 private:
 	std::string difficulty;
 	int target[2];
+	Stack targets;
 
 	Ship carrier;
 	Ship battleship;
