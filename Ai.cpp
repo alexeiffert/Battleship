@@ -1,6 +1,7 @@
 #include "Ai.h"
 
-Ai::Ai(std::string difficulty) {
+Ai::Ai(std::string difficulty) : targets(4)
+{
 	this->difficulty = difficulty;
 };
 
@@ -45,18 +46,22 @@ int* Ai::normalAttack(int board[10][10]) {
 
 	int attack[2];
 
-	if (target) {
-		for (int i = -1; i = 1; i += 2) {
-			for (int j = -1; i = 1; i += 2) {
-				if (board[i + target[0]][j + target[1]]) {
-					continue;
-				}
-				else {
-					attack[0] = i;
-					attack[1] = j;
-				}
-			}
-		}
+	if (targets.pop()) {
+
+		attack[0] = targets.pop()[0];
+		attack[1] = targets.pop()[1];
+
+//		for (int i = -1; i = 1; i += 2) {
+//			for (int j = -1; i = 1; i += 2) {
+//				if (board[i + target[0]][j + target[1]]) {
+//					continue;
+//				}
+//				else {
+//					attack[0] = i;
+//					attack[1] = j;
+//				}
+//			}
+//		}
 	}
 	else {
 		return easyAttack(board);

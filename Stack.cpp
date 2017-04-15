@@ -2,22 +2,22 @@
 
 //Constructor for stack object. Note: note = size of array, top = number of objects stored in stack
 Stack::Stack(int size) {
-	sArray = new std::string[size];
 	this->size = size;
+	int** sArray = new int*[size];
 	top = 0;
 }
 
 //Push ie LIFO
-void Stack::push(std::string string) {
-	sArray[top] = string;
+void Stack::push(int square[2]) {
 	top++;
+	sArray[top] = *square;
 }
 
 //Pop ie LIFO
-std::string Stack::pop() {
+int* Stack::pop() {
+	sArray[top] = 0;
 	top--;
-	return sArray[top];
-	sArray[top] = nullptr;
+	return sArray[top + 1];
 }
 
 Stack::~Stack() {

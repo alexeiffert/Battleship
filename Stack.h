@@ -1,5 +1,5 @@
-#ifndef PA3_H
-#define PA3_H
+#ifndef STACK_H
+#define STACK_H
 
 #include <string>
 #include <iostream>
@@ -8,14 +8,14 @@
 struct Stack {
 	int size;
 	int top;
-	std::string* sArray;
+	int* sArray;
 
 	//Constructor for stack object of size 'size'
 	Stack(int size);
 	
 	//Push and pop ie LIFO methods
-	void push(std::string string);
-	std::string pop();
+	void push(int square[2]);
+	int* pop();
 
 	//Destructor
 	~Stack();
