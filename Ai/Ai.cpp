@@ -83,14 +83,16 @@ int Ai::getX() {
 void Ai::fitAircraftcarrier(int board[10][10])
 {
 	int count = 0;
-	for (int i = 0; i < 10; i++) {		//ready all the possible space for Carrier first(still working)
+	for (int i = 0; i < 10; i++) {		//read all the possible space for Carrier first(still working)
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 6) {
-				if (board[i][j] == board[i][j + 1]== board[i][j + 2]== board[i][j + 3]== board[i][j + 4]) { count++; }
+				if (board[i][j] == board[i][j + 4]) {
+					count++; }
 			}
 
 			if (i < 6 && j < 10) {
-				if (board[i][j] == board[i + 1][j] == board[i + 2][j] == board[i + 3][j] == board[i + 4][j]) { count++; }
+				if (board[i][j] == board[i + 4][j]) {
+					count++; }
 			}
 		}
 	}
@@ -101,11 +103,13 @@ void Ai::fitBattleship(int board[10][10])
 	for (int i = 0; i < 10; i++) {			//read all the possible space for Battleship first(still working)
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 7) {
-				if (board[i][j] == board[i][j + 1]== board[i][j + 2]== board[i][j + 3]) { count++; }
+				if (board[i][j] == board[i][j + 3]) {
+					count++; }
 			}
 
 			if (i < 7 && j < 10) {
-				if (board[i][j] == board[i + 1][j]== board[i + 2][j]== board[i + 3][j]) { count++; }
+				if (board[i][j] == board[i + 3][j]) {
+					count++; }
 			}
 		}
 	}
@@ -116,11 +120,13 @@ void Ai::fitSubmarine(int board[10][10])
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 8) {
-				if (board[i][j] == board[i][j + 1]== board[i][j + 2]) { count++; }
+				if (board[i][j] == board[i][j + 2]) { 
+					count++; }
 			}
 
 			if (i < 8 && j < 10) {
-				if (board[i][j] == board[i + 1][j]== board[i + 2][j]) { count++; }
+				if (board[i][j] == board[i + 2][j]) { 
+					count++; }
 			}
 		}
 	}
@@ -131,11 +137,13 @@ void Ai::fitCruiser(int board[10][10])
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 8) {
-				if (board[i][j] == board[i][j + 1] == board[i][j + 2]) { count++; }
+				if (board[i][j] == board[i][j + 2]) {
+					count++; }
 			}
 
 			if (i < 8 && j < 10) {
-				if (board[i][j] == board[i + 1][j] == board[i + 2][j]) { count++; }
+				if (board[i][j] == board[i + 2][j]) {
+					count++; }
 			}
 		}
 	}
@@ -147,11 +155,13 @@ void Ai::fitDestroyer(int board[10][10])
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 9) {
-				if (board[i][j] == board[i][j + 1]) { count++; }
+				if (board[i][j] == board[i][j + 1]) {
+					count++; }
 			}
 
 			if (i < 9 && j < 10) {
-				if (board[i][j] == board[i + 1][j]) { count++; }
+				if (board[i][j] == board[i + 1][j]) {
+					count++; }
 			}
 		}
 	}
@@ -203,9 +213,9 @@ void probabilityCalculate(int board[10][10], int a, int b) {
 	else if (!target) // STILL WORKING!!!
 	{
 		probabilityBoard[iAttack][jAttack] = -999;
-		for (int i = iAttack; i >0; i--) { //Èç¹ûÎÒmissÁËÕâ²¿·Ö£¬ÖÜÎ§µÄ¶¼Òª´ÓÖÐÐÄºáÊúÀ©É¢³öÈ¥Ô¼¼õÔ½Ð¡£¬×ßµÄÔ½Ô¶¼õµÄÔ½ÉÙ
+		for (int i = iAttack; i >0; i--) { //ï¿½ï¿½ï¿½ï¿½ï¿½missï¿½ï¿½ï¿½â²¿ï¿½Ö£ï¿½ï¿½ï¿½Î§ï¿½Ä¶ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½É¢ï¿½ï¿½È¥Ô¼ï¿½ï¿½Ô½Ð¡ï¿½ï¿½ï¿½ßµï¿½Ô½Ô¶ï¿½ï¿½ï¿½Ô½ï¿½ï¿½
 			if (probabilityBoard[i][jAttack] != -999) {
-				probabilityBoard[i - 1][jAttack] = probabilityBoard[i - 1][jAttack] - (iAttack - i); //i-1ÊÇÔÚ×î¿ªÊ¼µÄÊ±ºò¾ÍÊÇ[i][j]µÄÉÏÃæÒ»¸ñ
+				probabilityBoard[i - 1][jAttack] = probabilityBoard[i - 1][jAttack] - (iAttack - i); //i-1ï¿½ï¿½ï¿½ï¿½ï¿½î¿ªÊ¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½[i][j]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 			}
 		}
 
