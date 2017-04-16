@@ -5,9 +5,8 @@
 #include <iostream>
 #include <stdlib.h> 
 #include <time.h>
-#include "Stack.h"
 #include <iomanip>
-
+#include "Stack.h"
 
 class Ship {
 public:
