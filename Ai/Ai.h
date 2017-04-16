@@ -17,51 +17,40 @@ public:
 };
 
 class Ai {
+
 private:
 	std::string difficulty;
 	int target[2];
 	Stack targetStack;
 
+	//Each "Ai object" possesses the 5 standard ships
 	Ship carrier;
 	Ship battleship;
 	Ship cruiser;
 	Ship submarine;
 	Ship destroyer;
 
-	int nextAttack[2];
-
-	int board [10][10];
-
-	//void fitAircraftcarrier(int board[10][10]);
-	//void fitBattleship(int board[10][10]);
-	//void fitSubmarine(int board[10][10]);
-	//void fitCruiser(int board[10][10]);
-	//void fitDestroyer(int board[10][10]);
-	//void probabilityCalculate(int board[10][10], int a, int b);
-	//void hunt(int board[10][10]);
-	//void lockTarget(int board[10][10]);
-
-public:
-	
-	//Constructs an Ai object with default difficulty "easy"
-	Ai(std::string difficulty = "easy");
-
-	void printRadar();
-
-	int* attack(int board[10][10]);
-
+	//Used in the Ai's Insane mode to calculate square probabilities
 	void enumerateTallies(int board[10][10], int shipSize);
 	double probabilityBoard[10][10];
 
-	Ship printShip();
+public:
+	//Constructs an Ai object with default difficulty "easy"
+	Ai(std::string difficulty = "easy");
+
+	//Prints a visualization of the Ai's probability density function
+	void printRadar();
+
+	//Blanket method for selecting the correct attack based on string difficulty
+	int* attack(int board[10][10]);
+
 	//Arranges ships at the start of the game only
 	void arrangeShip();
 
 	//Uses appropriate algorithm to pick attack square. Returns pointer to int[] with values (x,y)
 	int* easyAttack(int board[10][10]);
 	int* normalAttack(int board[10][10]);
-	int* hardAttack(int board[10][10]);
-//	int* insaneAttack(int board[10][10]);
+	int* insaneAttack(int board[10][10]);
 
 };
 
