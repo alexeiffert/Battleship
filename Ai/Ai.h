@@ -34,7 +34,7 @@ private:
 	void fitSubmarine(int board[10][10]);
 	void fitCruiser(int board[10][10]);
 	void fitDestroyer(int board[10][10]);
-
+	void probabilityCalculate(string board[10][10], int a, int b);
 	void hunt(int board[10][10]);
 	void lockTarget(int board[10][10]);
 
