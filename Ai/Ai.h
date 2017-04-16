@@ -18,7 +18,6 @@ private:
 	std::string difficulty;
 	int target[2];
 	Stack targetStack;
-	
 
 	Ship carrier;
 	Ship battleship;
@@ -43,6 +42,8 @@ public:
 	
 	//Constructs an Ai object with default difficulty "easy"
 	Ai(std::string difficulty = "easy");
+
+	int* attack(int board[10][10]);
 
 	void enumerateTallies(int board[10][10], int shipSize);
 	double probabilityBoard[10][10];

@@ -24,8 +24,8 @@ int* Stack::pop() {
 	return temp;
 }
 
-int Stack::getSize() {
-	return size;
+int Stack::getTop() {
+	return top;
 }
 
 Stack::~Stack() {

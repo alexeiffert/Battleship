@@ -20,7 +20,7 @@ public:
 	int* pop();
 
 	//return size of stack
-	int getSize();
+	int getTop();
 
 	//Destructor
 	~Stack();

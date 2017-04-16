@@ -32,6 +32,22 @@ void Ai::arrangeShip() {
 	destroyer.yStart = 1;
 };
 
+//Selects the correct attack for the difficulty level
+int* Ai::attack(int board[10][10]) {
+	if (difficulty == "easy") {
+		return easyAttack(board);
+	}
+	if (difficulty == "normal") {
+		return normalAttack(board);
+	}
+	if (difficulty == "hard") {
+		return hardAttack(board);
+	}
+	std::cout << "Error! You have chosen an invalid difficulty.";
+
+	return nullptr;
+}
+
 int* Ai::easyAttack(int board[10][10]) {
 
 	int attack[2];
@@ -49,11 +65,13 @@ int* Ai::easyAttack(int board[10][10]) {
 
 int* Ai::normalAttack(int board[10][10]) {
 
+	int* getAddress;
 	int attack[2];
 
-	if (targetStack.getSize()) {
-		attack[0] = targetStack.pop()[0];
-		attack[1] = targetStack.pop()[1];
+	if (targetStack.getTop()) {
+		getAddress = targetStack.pop();
+		attack[0] = getAddress[0];
+		attack[1] = getAddress[1];
 
 //		for (int i = -1; i = 1; i += 2) {
 //			for (int j = -1; i = 1; i += 2) {
@@ -76,42 +94,64 @@ int* Ai::normalAttack(int board[10][10]) {
 
 //Note: Each time this function is run, the probability board is reset and recalculated
 int* Ai::hardAttack(int board[10][10]) {
-	
-	//Resets the probability matrix
+
+	//If target in stack, choose first. Else, continue with probability calculations
+	int* getAddress;
+	int attack[2];
+
+	if (targetStack.getTop()) {
+		getAddress = targetStack.pop();
+		attack[0] = getAddress[0];
+		attack[1] = getAddress[1];
+		return attack;
+	}
+
+	//Resets the probability matrix for each calculation
 	for (int i = 0; i < 10; i++) {
-		for (int j = 0; i < 10; j++) {
-			probabilityBoard[i][j] = 0;
+		for (int j = 0; j < 10; j++) {
+			probabilityBoard[i][j] = 0.;
 		}
 	}
 
-	//Calculates the probabilities for all remaining ships
+//TODO: Insert shipExists? method here
+
+	//Calculates the tallies for all remaining ships
 	enumerateTallies(board, 5);
 	enumerateTallies(board, 4);
 	enumerateTallies(board, 3);
 	enumerateTallies(board, 3);
 	enumerateTallies(board, 2);
+
+	//Recalculates tallies as probability values
+	double total = 0;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			total += probabilityBoard[i][j];
+		}
+	}
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			probabilityBoard[i][j] = probabilityBoard[i][j] / total;
+		}
+	}
 	
 	//Returns the coordinates of the square with the highest probability
 	double max = 0;
-	int attack[2];
 
 	for (int i = 0; i < 10; i++) {
-		for (int j = 0; i < 10; j++) {
-			if (probabilityBoard[i][j] < max) {
+		for (int j = 0; j < 10; j++) {
+			if (probabilityBoard[i][j] > max) {
 				max = probabilityBoard[i][j];
 				attack[0] = i;
 				attack[1] = j;
 			}
 		}
 	}
+
 	return attack;
 }
 
-
-//----------------------------------------------------------------------------//
-
-
-
+//This function is utilized in hardAttack to calculate square probabilities
 void Ai::enumerateTallies(int board[10][10], int shipSize) {
 	
 	int emptyCount = 100;	//ie the maximum empty squares on the board
