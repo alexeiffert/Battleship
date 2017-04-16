@@ -100,7 +100,7 @@ void Ai::fitAircraftcarrier(int board[10][10])
 void Ai::fitBattleship(int board[10][10])
 {
 	int count = 0;
-	for (int i = 0; i < 10; i++) {			//ready all the possible space for Battleship first(still working)
+	for (int i = 0; i < 10; i++) {			//read all the possible space for Battleship first(still working)
 		for (int j = 0; j < 10; j++) {
 			if (i < 10 && j < 7) {
 				if (board[i][j] == board[i][j + 3]) {
@@ -164,6 +164,61 @@ void Ai::fitDestroyer(int board[10][10])
 					count++; }
 			}
 		}
+	}
+}
+
+void probabilityCalculate(int board[10][10], int a, int b) {
+	int iAttack = a, jAttack = b;
+	int probabilityBoard[10][10] = { { 1,2,3,4,5,5,4,3,2,1 },{ 2,3,4,5,6,6,5,4,3,2 },
+	{ 3,4,5,6,7,7,6,5,4,3 },{ 4,5,6,7,8,8,7,6,5,4 },
+	{ 5,6,7,8,9,9,8,7,6,5 },{ 5,6,7,8,9,9,8,7,6,5 },
+	{ 4,5,6,7,8,8,7,6,5,4 },{ 3,4,5,6,7,7,6,5,4,3 },
+	{ 2,3,4,5,6,6,5,4,3,2 },{ 1,2,3,4,5,5,4,3,2,1 } };
+
+	if (target) {
+		probabilityBoard[iAttack][jAttack] = -999; //set this square's probability to -999 because this square cannot be hit anymore
+												   //When a hit on the target, we can set all the probaility is 1 except those squares has been hit but not on the target
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (probabilityBoard[i][j] != -999) {
+					probabilityBoard[i][j] = 1;
+				}
+			}
+		}
+
+		for (int i = 0; i < iAttack; i++) {	   //then here, we will change the probability around the target square, once distance is closer to target, the probability is larger
+			if (probabilityBoard[i][jAttack] != -999) {
+				probabilityBoard[i][jAttack] = i + 2; //the reason to add 2 is that will always bigger than 1 which is other unrelated square's probability
+			}
+		}
+
+		for (int i = 9; i > iAttack; i--) {
+			if (probabilityBoard[i][jAttack] != -999) {
+				probabilityBoard[i][jAttack] = i + 2;
+			}
+		}
+
+		for (int j = 0; j < jAttack; j++) {
+			if (probabilityBoard[iAttack][j] != -999) {
+				probabilityBoard[iAttack][j] = j + 2;
+			}
+		}
+
+		for (int j = 9; j > jAttack; j--) {
+			if (probabilityBoard[iAttack][j] != -999) {
+				probabilityBoard[iAttack][j] = j + 2;
+			}
+		}
+	} //still working on !target
+	else if (!target) // STILL WORKING!!!
+	{
+		probabilityBoard[iAttack][jAttack] = -999;
+		for (int i = iAttack; i >0; i--) { //�����miss���ⲿ�֣���Χ�Ķ�Ҫ�����ĺ����ɢ��ȥԼ��ԽС���ߵ�ԽԶ���Խ��
+			if (probabilityBoard[i][jAttack] != -999) {
+				probabilityBoard[i - 1][jAttack] = probabilityBoard[i - 1][jAttack] - (iAttack - i); //i-1�����ʼ��ʱ�����[i][j]������һ��
+			}
+		}
+
 	}
 }
 

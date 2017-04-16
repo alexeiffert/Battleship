@@ -28,6 +28,16 @@ private:
 	int nextAttack[2];
 
 	int board [10][10];
+
+	void fitAircraftcarrier(int board[10][10]);
+	void fitBattleship(int board[10][10]);
+	void fitSubmarine(int board[10][10]);
+	void fitCruiser(int board[10][10]);
+	void fitDestroyer(int board[10][10]);
+	void probabilityCalculate(int board[10][10], int a, int b);
+	void hunt(int board[10][10]);
+	void lockTarget(int board[10][10]);
+
 public:
 	
 	//Constructs an Ai object with default difficulty "easy"
