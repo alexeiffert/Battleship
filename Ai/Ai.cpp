@@ -51,15 +51,20 @@ int* Ai::attack(int board[10][10]) {
 int* Ai::easyAttack(int board[10][10]) {
 
 	int attack[2];
+	srand(time(NULL)*time(NULL));
 
 	for (int i = 0; i < 10; i++) {
-		for (int j = 10; j < 10; j++)
-			if (!board[i + rand() % 10][j + rand() % 10]) {
-				attack[0] = i;
-				attack[1] = j;
+		for (int j = 0; j < 10; j++) {
+			if (!board[(i + rand()) % 10][(j + rand()) % 10]) {
+				attack[0] = (i + rand()) % 10;
+				attack[1] = (j + rand()) % 10;
 				return attack;
 			}
+		}
+			
 	}
+
+	std::cout << "Unknown error. Please terminate program.";
 	return nullptr;
 };
 
@@ -72,24 +77,14 @@ int* Ai::normalAttack(int board[10][10]) {
 		getAddress = targetStack.pop();
 		attack[0] = getAddress[0];
 		attack[1] = getAddress[1];
-
-//		for (int i = -1; i = 1; i += 2) {
-//			for (int j = -1; i = 1; i += 2) {
-//				if (board[i + target[0]][j + target[1]]) {
-//					continue;
-//				}
-//				else {
-//					attack[0] = i;
-//					attack[1] = j;
-//				}
-//			}
-//		}
+		return attack;
 	}
 	else {
 		return easyAttack(board);
 	}
 
-	return attack;
+	std::cout << "Unknown Error.";
+	return nullptr;
 }
 
 //Note: Each time this function is run, the probability board is reset and recalculated
@@ -109,7 +104,7 @@ int* Ai::hardAttack(int board[10][10]) {
 	//Resets the probability matrix for each calculation
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			probabilityBoard[i][j] = 0.;
+			probabilityBoard[i][j] = 0;
 		}
 	}
 

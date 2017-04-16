@@ -4,7 +4,9 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h> 
+#include <time.h>
 #include "Stack.h"
+
 
 class Ship {
 public:
