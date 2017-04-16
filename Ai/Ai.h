@@ -44,7 +44,7 @@ public:
 	//Constructs an Ai object with default difficulty "easy"
 	Ai(std::string difficulty = "easy");
 
-	void calculateProbabilities(int board[10][10], int shipSize);
+	void enumerateTallies(int board[10][10], int shipSize);
 	double probabilityBoard[10][10];
 
 	Ship printShip();

@@ -85,11 +85,11 @@ int* Ai::hardAttack(int board[10][10]) {
 	}
 
 	//Calculates the probabilities for all remaining ships
-	calculateProbabilities(board, 5);
-	calculateProbabilities(board, 4);
-	calculateProbabilities(board, 3);
-	calculateProbabilities(board, 3);
-	calculateProbabilities(board, 2);
+	enumerateTallies(board, 5);
+	enumerateTallies(board, 4);
+	enumerateTallies(board, 3);
+	enumerateTallies(board, 3);
+	enumerateTallies(board, 2);
 	
 	//Returns the coordinates of the square with the highest probability
 	double max = 0;
@@ -112,7 +112,7 @@ int* Ai::hardAttack(int board[10][10]) {
 
 
 
-void Ai::calculateProbabilities(int board[10][10], int shipSize) {
+void Ai::enumerateTallies(int board[10][10], int shipSize) {
 	
 	int emptyCount = 100;	//ie the maximum empty squares on the board
 	for (int i = 0; i < 10; i++) {
@@ -125,9 +125,9 @@ void Ai::calculateProbabilities(int board[10][10], int shipSize) {
 	}
 //	std::cout << emptyCount << std::endl;
 
-	double probability = 17 / double(emptyCount);	//ie ship squares left/number of squares total
+	double probability = 1;	//ie ship squares left/number of squares total
 
-	//Counts probabilities horizontally
+	//Counts tallies horizontally
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j <= 10 - shipSize; j++) {
 			int count = 0;
@@ -144,7 +144,7 @@ void Ai::calculateProbabilities(int board[10][10], int shipSize) {
 		}
 	}
 
-	//Counts probabilities vertically
+	//Counts tallies vertically
 	for (int i = 0; i <= 10 - shipSize; i++) {
 		for (int j = 0; j < 10; j++) {
 			int count = 0;
