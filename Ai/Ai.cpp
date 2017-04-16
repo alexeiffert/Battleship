@@ -14,6 +14,57 @@ Ship Ai::printShip() {
 	return carrier;
 }
 
+void Ai::printRadar() {
+
+	double avProbability = 0;
+	int count = 0;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if (probabilityBoard[i][j]) {
+				avProbability += probabilityBoard[i][j];
+				count++;
+			}
+		}
+	}
+
+	avProbability = avProbability / double(count);
+	std::cout << avProbability;
+
+	for (int i = 0; i < 5; i++)
+		std::cout << std::endl;
+
+	//Outputs numbers for X axis
+	std::cout << "           ";
+	for (int i = 0; i < 10; i++)
+		std::cout << std::setw(5) << i;
+
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	//Outputs letters for Y axis
+	for (int i = 0; i < 10; i++) {
+		std::cout << "     " << char('A' + i) << "     ";
+
+		for (int j = 0; j < 10; j++) {
+			if (probabilityBoard[i][j] < avProbability / 2)
+				std::cout << std::setw(4) << char(32) << char(248);
+			else if (probabilityBoard[i][j] > avProbability / 2 && probabilityBoard[i][j] < avProbability)
+				std::cout << std::setw(4) << char(176) << char(176);
+			else if (probabilityBoard[i][j] > avProbability && probabilityBoard[i][j] < avProbability * 3 / 2)
+				std::cout << std::setw(4) << char(177) << char(177);
+			else if (probabilityBoard[i][j] > avProbability * 3 / 2)
+				std::cout << std::setw(4) << char(178) << char(178);
+			else
+				std::cout << std::setw(4) << char(219) << char(219);
+		}
+
+		std::cout << std::endl;
+
+		std::cout << std::endl;
+	}
+}
+
 //Arranges ships at the start of the game only
 void Ai::arrangeShip() {
 	carrier.yStart = 1;
@@ -51,11 +102,16 @@ int* Ai::attack(int board[10][10]) {
 int* Ai::easyAttack(int board[10][10]) {
 
 	int attack[2];
+
+	//Generates two pseudo-random numbers for each coordinate
 	srand(time(NULL)*time(NULL));
+	int randX = rand();
+	srand(time(NULL)*time(NULL));
+	int randY = rand();
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			if (!board[(i + rand()) % 10][(j + rand()) % 10]) {
+			if (!board[(i + randX) % 10][(j + randY) % 10]) {
 				attack[0] = (i + rand()) % 10;
 				attack[1] = (j + rand()) % 10;
 				return attack;
@@ -117,7 +173,16 @@ int* Ai::hardAttack(int board[10][10]) {
 	enumerateTallies(board, 3);
 	enumerateTallies(board, 2);
 
-	//Recalculates tallies as probability values
+	//Factors in parity for even squares, ie sets "probability" to 0	
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if ((i + j) % 2 == 0) {
+				probabilityBoard[i][j] = 0;
+			}
+		}
+	}
+
+	//From the remaining even squares, calculates probabilities based on tallies
 	double total = 0;
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -132,7 +197,6 @@ int* Ai::hardAttack(int board[10][10]) {
 	
 	//Returns the coordinates of the square with the highest probability
 	double max = 0;
-
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (probabilityBoard[i][j] > max) {

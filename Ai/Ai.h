@@ -6,6 +6,7 @@
 #include <stdlib.h> 
 #include <time.h>
 #include "Stack.h"
+#include <iomanip>
 
 
 class Ship {
@@ -44,6 +45,8 @@ public:
 	
 	//Constructs an Ai object with default difficulty "easy"
 	Ai(std::string difficulty = "easy");
+
+	void printRadar();
 
 	int* attack(int board[10][10]);
 
