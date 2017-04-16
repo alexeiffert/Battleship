@@ -16,10 +16,12 @@ public:
 	int yStart;
 };
 
+
 class Ai {
 private:
 	std::string difficulty;
 	int target[2];
+
 	Stack targetStack;
 
 	Ship carrier;
@@ -31,15 +33,6 @@ private:
 	int nextAttack[2];
 
 	int board [10][10];
-
-	//void fitAircraftcarrier(int board[10][10]);
-	//void fitBattleship(int board[10][10]);
-	//void fitSubmarine(int board[10][10]);
-	//void fitCruiser(int board[10][10]);
-	//void fitDestroyer(int board[10][10]);
-	//void probabilityCalculate(int board[10][10], int a, int b);
-	//void hunt(int board[10][10]);
-	//void lockTarget(int board[10][10]);
 
 public:
 	
@@ -54,6 +47,7 @@ public:
 	double probabilityBoard[10][10];
 
 	Ship printShip();
+
 	//Arranges ships at the start of the game only
 	void arrangeShip();
 
