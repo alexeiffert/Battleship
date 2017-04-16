@@ -1,10 +1,4 @@
-#include <iostream>
 #include "Game.h"
-#include "Board.h"
-#include "Ai.h"
-#include "Ship.h"
-#include <string>
-
 
 const int player = 1;
 const int opponent = 2;

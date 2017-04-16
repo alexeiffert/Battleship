@@ -1,6 +1,5 @@
 #include "Ai.h"
 
-
 Ai::Ai(std::string difficulty) : targetStack(4)
 {
 	this->difficulty = difficulty;
@@ -11,12 +10,9 @@ Ai::Ai(std::string difficulty) : targetStack(4)
 	}
 };
 
-Ship Ai::printShip() {
-	return carrier;
-}
-
 void Ai::printRadar() {
 
+	//Calculates the average probability on the probability board
 	double avProbability = 0;
 	int count = 0;
 	for (int i = 0; i < 10; i++) {
@@ -31,6 +27,7 @@ void Ai::printRadar() {
 	avProbability = avProbability / double(count);
 	std::cout << avProbability;
 
+	//For formatting purposes
 	for (int i = 0; i < 5; i++)
 		std::cout << std::endl;
 
@@ -47,6 +44,7 @@ void Ai::printRadar() {
 	for (int i = 0; i < 10; i++) {
 		std::cout << "     " << char('A' + i) << "     ";
 
+		//Outputs appropriate visual character for that square's probability compared with the average for the board
 		for (int j = 0; j < 10; j++) {
 			if (probabilityBoard[i][j] < avProbability / 2)
 				std::cout << std::setw(4) << char(32) << char(248);
@@ -84,7 +82,6 @@ void Ai::arrangeShip() {
 	destroyer.yStart = 1;
 };
 
-
 //Selects the correct attack for the difficulty level
 int* Ai::attack(int board[10][10]) {
 	if (difficulty == "easy") {
@@ -93,8 +90,8 @@ int* Ai::attack(int board[10][10]) {
 	if (difficulty == "normal") {
 		return normalAttack(board);
 	}
-	if (difficulty == "hard") {
-		return hardAttack(board);
+	if (difficulty == "insane") {
+		return insaneAttack(board);
 	}
 	std::cout << "Error! You have chosen an invalid difficulty.";
 
@@ -111,6 +108,7 @@ int* Ai::easyAttack(int board[10][10]) {
 	srand(time(NULL)*time(NULL));
 	int randY = rand();
 
+	//Generates and returns 2 random empty coordinates
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (!board[(i + randX) % 10][(j + randY) % 10]) {
@@ -131,12 +129,14 @@ int* Ai::normalAttack(int board[10][10]) {
 	int* getAddress;
 	int attack[2];
 
+	//If target in stack, return coordinates and override search code
 	if (targetStack.getTop()) {
 		getAddress = targetStack.pop();
 		attack[0] = getAddress[0];
 		attack[1] = getAddress[1];
 		return attack;
 	}
+	//Else, return easy attack
 	else {
 		return easyAttack(board);
 	}
@@ -146,7 +146,7 @@ int* Ai::normalAttack(int board[10][10]) {
 }
 
 //Note: Each time this function is run, the probability board is reset and recalculated
-int* Ai::hardAttack(int board[10][10]) {
+int* Ai::insaneAttack(int board[10][10]) {
 
 	//If target in stack, choose first. Else, continue with probability calculations
 	int* getAddress;
@@ -166,14 +166,22 @@ int* Ai::hardAttack(int board[10][10]) {
 		}
 	}
 
-//TODO: Insert shipExists? method here
-
-	//Calculates the tallies for all remaining ships
-	enumerateTallies(board, 5);
-	enumerateTallies(board, 4);
-	enumerateTallies(board, 3);
-	enumerateTallies(board, 3);
-	enumerateTallies(board, 2);
+		//Calculates the tallies for all remaining ships
+	if (true/*carrier*/){
+		enumerateTallies(board, 5);
+	}
+	if (true/*battleship*/) {
+		enumerateTallies(board, 4);
+	}
+	if (true/*cruiser*/) {
+		enumerateTallies(board, 3);
+	}
+	if (true/*submarine*/) {
+		enumerateTallies(board, 3);
+	}
+	if (true/*destroyer*/) {
+		enumerateTallies(board, 2);
+	}
 
 	//Factors in parity for even squares, ie sets "probability" to 0	
 	for (int i = 0; i < 10; i++) {
@@ -191,13 +199,14 @@ int* Ai::hardAttack(int board[10][10]) {
 			total += probabilityBoard[i][j];
 		}
 	}
+
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			probabilityBoard[i][j] = probabilityBoard[i][j] / total;
 		}
 	}
 	
-	//Returns the coordinates of the square with the highest probability
+	//Searches for and returns the coordinates of the square with the highest probability
 	double max = 0;
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -212,21 +221,18 @@ int* Ai::hardAttack(int board[10][10]) {
 	return attack;
 }
 
-//This function is utilized in hardAttack to calculate square probabilities
+//This function is utilized in hardAttack to enumerate the possibilities a ship is in a certain location
 void Ai::enumerateTallies(int board[10][10], int shipSize) {
 	
 	int emptyCount = 100;	//ie the maximum empty squares on the board
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			if (board[i][j]) {	//This counts the squares that were fired upon and changes their probability to 0 and also decreases the square count
+			if (board[i][j]) {	//This counts the squares that were fired upon, changes their probability to 0, and also decreases the square count
 				probabilityBoard[i][j] = 0;
 				emptyCount--;
 			}
 		}
 	}
-//	std::cout << emptyCount << std::endl;
-
-	double probability = 1;	//ie ship squares left/number of squares total
 
 	//Counts tallies horizontally
 	for (int i = 0; i < 10; i++) {
@@ -239,13 +245,11 @@ void Ai::enumerateTallies(int board[10][10], int shipSize) {
 			}
 			if (count >= shipSize) {
 				for (int k = 0; k < count; k++) {
-					probabilityBoard[i][j + k] += probability;
-
+					probabilityBoard[i][j + k]++;
 				}
 			}
 		}
 	}
-
 
 	//Counts tallies vertically
 	for (int i = 0; i <= 10 - shipSize; i++) {
@@ -258,10 +262,9 @@ void Ai::enumerateTallies(int board[10][10], int shipSize) {
 			}
 			if (count >= shipSize) {
 				for (int k = 0; k < count; k++) {
-					probabilityBoard[i + k][j] += probability;
+					probabilityBoard[i + k][j]++;
 				}
 			}
 		}
 	}
 }
-

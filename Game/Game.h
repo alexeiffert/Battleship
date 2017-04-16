@@ -1,5 +1,9 @@
 #include <string>
 #include <iostream>
+#include "Ai.h"
+#include "Ship.h"
+#include "Board.h"
+
 
 class Game {
 private: 
