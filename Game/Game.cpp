@@ -32,7 +32,6 @@ bool gameOver(int shipsDestroyed, int maxShips)
 	else return false;
 }
 
-
 int main() {
 	Board playerBoard;
 	Board opponentBoard;
@@ -49,7 +48,7 @@ int main() {
 	
 	std::cout << "Welcome to BATTLESHIP!" << std::endl
 		<< "Please enter your name" << std::endl
-		<< "Name: " << std::endl;
+		<< "Name: " << std::flush;
 
 	std::string playerName;
 	std::cin >> playerName; 
@@ -90,5 +89,6 @@ int main() {
 		std::cout << "Congratulations, you defeated the enemy!" << std::endl;
 	}
 	else std::cout << "You've been defeated!" << std::endl;
+
 	return 0;
 }
